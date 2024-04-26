@@ -5,12 +5,13 @@ import java.util.Random;
 
 public class WhackAMole {
     int boardWidth = 600;
-    int boardHeight = 650;
+    int boardHeight = 670;
 
     JFrame frame = new JFrame("Whack A Mole");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    JButton playAgain = new JButton("Play Again");
 
     JButton[] board = new JButton[9];
     ImageIcon moleIcon;
@@ -42,6 +43,21 @@ public class WhackAMole {
 
         boardPanel.setLayout(new GridLayout(3, 3));
         frame.add(boardPanel);
+
+        playAgain.setFont(new Font("Arial", Font.BOLD, 30));
+        playAgain.setFocusable(false);
+        frame.add(playAgain, BorderLayout.SOUTH);
+
+        playAgain.addActionListener(_ -> {
+            score = 0;
+            textLabel.setText("Click on the mole to play!");
+            for (int i = 0; i < 9; i++) {
+                board[i].setIcon(null);
+                board[i].setEnabled(true);
+            }
+            setMoleTimer.start();
+            setPlantTimer.start();
+        });
 
         Image moleImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("./capybara.png"))).getImage();
         moleIcon = new ImageIcon(moleImage.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH));
